@@ -1,15 +1,38 @@
+
 .post-info {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 5px;
+    background-color: #c8d8ed;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }
+
+.user-info {
+    background-color: lightblue;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.comments-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
 .comment-block {
-    border: 1px solid #ddd;
+
+    border: 1px solid #c7cfdd;
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
     display: inline-block;
     width: calc(25% - 20px);
     box-sizing: border-box;
+    color: #6594e1;
+
 }
+
+
+

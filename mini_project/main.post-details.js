@@ -7,49 +7,50 @@
 // щоб було видно що це блоки (дати фон. марджини і тд)
 
 
-async function fetchPostDetails() {
-    let urlParams = new URLSearchParams(Location.search);
-    let postId = urlParams.get('id');
+let postId = new URLSearchParams(location.search).get('postId');
 
-    try {
-        let response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
-        let post = await response.json();
-        let postInfoDiv = document.getElementById('post-info');
-        postInfoDiv.innerHTML = `
-    <div class="post-info">
-    <p>ID: ${post.id}</p>
-    <p>Title: ${post.title}</p>
-    <p>Body: ${post.body}</p>
-</div>
-    `;
-    } catch (e) {
-        console.log(e);
-    }
-}
-async function fetchComments (){
-    let urlParams = new URLSearchParams(location.search);
-    let postId = urlParams.get('id');
-    try {
-        let response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`);
-        let postId = await response.json();
-        let commentsContainer = document.getElementById('comments-container');
-        commentsContainer.innerHTML = '';
-        commentsContainer.forEach(comment =>{
-            let commentBlock = document.createElement('div');
-            commentBlock.className = 'comment-block';
-            commentBlock.innerHTML = `
-            <p><strong>${comment.name}</strong></p>
-            <p>Email: ${comment.email}</p>
-            <p>Comment: ${comment.body}</p>
-            `;
-            commentsContainer.appendChild(commentBlock);
+fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+    .then(res => res.json())
+    .then(post => {
+        let postInfo = document.getElementById('post-info');
+        let postTitle = document.createElement('h2');
+        postTitle.textContent = `Title: ${post.title}`;
+        let postBody = document.createElement('p');
+        postBody.textContent = `Body: ${post.body}`;
+        postInfo.appendChild(postTitle);
+        postInfo.appendChild(postBody);
 
+        return fetch(`https://jsonplaceholder.typicode.com/users/${post.userId}`);
+    })
+    .then(res => res.json())
+    .then(user => {
+        let userInfo = document.getElementById('user-info');
+        let userName = document.createElement('p');
+        userName.textContent = `Name: ${user.name}`;
+        let userEmail = document.createElement('p');
+        userEmail.textContent = `Email: ${user.email}`;
+        let userAddress = document.createElement('p');
+        userAddress.textContent = `Address: ${user.address.street}, ${user.address.city}, ${user.address.zipcode}`;
+        let userCompany = document.createElement('p');
+        userCompany.textContent = `Company: ${user.company.name} - ${user.company.catchPhrase}`;
+        userInfo.appendChild(userName);
+        userInfo.appendChild(userEmail);
+        userInfo.appendChild(userAddress);
+        userInfo.appendChild(userCompany);
+    });
+
+fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
+    .then(res => res.json())
+    .then(comments => {
+        let commentDiv = document.getElementById('comments');
+        comments.forEach(comment => {
+            let div = document.createElement('div');
+            div.className = 'comment-block';
+            div.textContent = comment.body;
+            commentDiv.appendChild(div);
         });
-    }catch (e){
-        console.log(e);
-    }
-}
-fetchPostDetails()
+    });
+
 
 
 
