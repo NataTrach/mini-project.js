@@ -1,0 +1,15 @@
+.post-info {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+}
+.comment-block {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    width: calc(25% - 20px);
+    box-sizing: border-box;
+}
